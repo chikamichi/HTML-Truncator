@@ -12,23 +12,23 @@ It's very simple. Install it with rubygems:
 
     gem install html_truncator
 
-Or, if you use bundler, add it to your `Gemfile`:
+Or, if you use Bundler, add it to your `Gemfile`:
 
     gem "html_truncator", "~>0.2"
 
 Then you can use it in your code:
 
     require "html_truncator"
-	HTML_Truncator.truncate("<p>Lorem ipsum dolor sit amet.</p>", 3)
-	# => "<p>Lorem ipsum dolor…</p>"
+    HTML_Truncator.truncate("<p>Lorem ipsum dolor sit amet.</p>", 3)
+    # => "<p>Lorem ipsum dolor…</p>"
 
-The HTML_Truncator class has only one method, `truncate`, with 3 arguments:
+The HTML_Truncator class has only one method, `truncate`, which accepts 3 arguments:
 
 * the HTML-formatted string to truncate
-* the number of words to keep (real words, tags and attributes aren't count)
-* some options like the ellipsis (optional, '…' by default).
+* the number of words to keep (real, actual words; tags and attributes aren't accounted for)
+* some options; for instance, the ellipsis (optional, defaulting to "…").
 
-And an attribute, `ellipsable_tags`, which lists the tags that can contain the ellipsis
+It also exposes the `ellipsable_tags` attribute, which lists the tags that *can* contain the ellipsis
 (by default: p ol ul li div header article nav section footer aside dd dt dl).
 
 
@@ -55,23 +55,23 @@ You can customize the ellipsis:
     HTML_Truncator.truncate("<p>Lorem ipsum dolor sit amet.</p>", 3, :ellipsis => " (truncated)")
     # => "<p>Lorem ipsum dolor (truncated)</p>"
 
-And even have HTML in the ellipsis:
+And even have HTML within the ellipsis:
 
     HTML_Truncator.truncate("<p>Lorem ipsum dolor sit amet.</p>", 3, :ellipsis => '<a href="/more-to-read">...</a>')
     # => "<p>Lorem ipsum dolor<a href="/more-to-read">...</a></p>"
 
-The ellipsis is put at the right place, inside `<p>`, but not `<i>`:
+Note that the ellipsis is put at the expected place (inside `<p>`, not `<i>`):
 
     HTML_Truncator.truncate("<p><i>Lorem ipsum dolor sit amet.</i></p>", 3)
     # => "<p><i>Lorem ipsum dolor</i>…</p>"
 
-You can indicate that a tag can contain the ellipsis but adding it to the ellipsable_tags:
+You can indicate that a tag may contain the ellipsis by adding it to the ellipsable_tags list:
 
     HTML_Truncator.ellipsable_tags << "blockquote"
     HTML_Truncator.truncate("<blockquote>Lorem ipsum dolor sit amet.</blockquote>", 3)
     # => "<blockquote>Lorem ipsum dolor…</blockquote>"
 
-You can know if a string was truncated with the `html_truncated?` method:
+You can check whether a string was truncated using the `html_truncated?` method:
 
     HTML_Truncator.truncate("<p>Lorem ipsum dolor sit amet.</p>", 3).html_truncated?
     # => true 
